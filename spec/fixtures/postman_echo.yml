@@ -1,0 +1,8 @@
+#the environment name
+:postman_echo:
+  :credentials:
+    :user: postman
+    :password: password
+
+  :headers:
+    :header1: "i'm a header i'm a header, i'm a header"
