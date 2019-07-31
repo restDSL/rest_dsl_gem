@@ -9,17 +9,15 @@ Gem::Specification.new do |spec|
   spec.email         = ['ridgel@grangeinsurance.com']
 
   spec.summary       = %q{A Simple DSL for writing rest services}
-  spec.homepage      = "http://gitlabce.grangeinsurance.com/te/restdsl-gem"
+  spec.homepage      = "https://github.com/castone22/rest_dsl_gem"
   spec.license       = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
-
     spec.metadata['homepage_uri'] = spec.homepage
-    spec.metadata['source_code_uri'] = "http://gitlabce.grangeinsurance.com/te/restdsl-gem"
-    spec.metadata['changelog_uri'] = "http://gitlabce.grangeinsurance.com/te/restdsl-gem"
+    spec.metadata['source_code_uri'] = "https://github.com/castone22/rest_dsl_gem"
+    spec.metadata['changelog_uri'] = "https://github.com/castone22/rest_dsl_gem"
   else
     raise 'RubyGems 2.0 or newer is required to protect against ' \
       'public gem pushes.'
