@@ -42,9 +42,9 @@ module RestDSL
         rescue RestClient::ExceptionWithResponse => e
           e.response
         end
-      JSON.parse(response, symbolize_names: true)
+      { response: response, parsed: JSON.parse(response, symbolize_names: true) }
     rescue JSON::ParserError => e
-      { status: response.code, response: response }
+      { response: response, parsed: "Failed to parse, see response for more information, code was: #{response.code}, message was: #{response.body}" }
     end
 
     def method_has_payload?(method)

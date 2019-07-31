@@ -25,7 +25,7 @@ describe RestDSL::Client do
       headers = {accept: 'application/json'}
       auth = {user: 'foo', password: 'bar'}
       result = service.execute(:get, 'get?bar=baz', headers, **auth)
-      expect(result[:args][:bar]).to eq 'baz'
+      expect(result[:parsed][:args][:bar]).to eq 'baz'
     end
 
     it 'can make post requests against a webservice' do
@@ -35,11 +35,10 @@ describe RestDSL::Client do
       payload = {body: "I've got a lovely bunch of coconuts, here they are all dancing in the rain"}
       result = service.execute(:post, 'post?bar=baz', headers, payload: payload, **auth)
       aggregate_failures('The response should contain both the body and params') do
-        expect(result[:args][:bar]).to eq 'baz'
-        expect(result[:json][:body]).to eq "I've got a lovely bunch of coconuts, here they are all dancing in the rain"
+        expect(result[:parsed][:args][:bar]).to eq 'baz'
+        expect(result[:parsed][:json][:body]).to eq "I've got a lovely bunch of coconuts, here they are all dancing in the rain"
       end
     end
-
 
   end
 end
