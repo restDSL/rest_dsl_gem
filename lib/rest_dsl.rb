@@ -1,5 +1,6 @@
 require_relative 'rest_dsl/version'
 require_relative 'rest_dsl/errors'
+require_relative 'rest_dsl/dsl'
 require 'psych'
 require 'json'
 
