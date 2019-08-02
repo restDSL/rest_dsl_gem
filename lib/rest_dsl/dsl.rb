@@ -13,30 +13,19 @@ module RestDSL
   module DSLExtensions
 
     ##
-    # Adds a DSL method for parsing information from a file, parser list can be overridden by setting
-    # @file_parsers.  If no parser is designed, for the file extension, loads the file as plain text
+    # Adds a DSL method for parsing information from a file, parser list can be overridden by redefining file_parsers
+    # If no parser is designed, for the file extension, loads the file as plain text
     module FromFile
 
-      def self.extended(clazz)
-        clazz.instance_eval do
-          @file_parsers = {
-            %w[.json] => JSON,
-            %w[.yml .yaml] => Psych
-          }
-        end
-      end
-
-      def self.included(clazz)
-        clazz.instance_eval do
-          @file_parsers = {
-            %w[.json] => JSON,
-            %w[.yml .yaml] => Psych
-          }
-        end
+      def file_parsers
+        {
+          %w[.json] => JSON,
+          %w[.yml .yaml] => Psych
+        }
       end
 
       def from_file(file_name)
-        parser = @file_parsers.find{|key, _| key.any? {|file_type| file_name.include? file_type}}[1]
+        parser = file_parsers.find{|key, _| key.any? {|file_type| file_name.include? file_type}}[1]
         result = if parser.eql?(Psych)
                    parser.load_file(file_name)
                  else # Most non-yaml parsers in ruby work like the json one so lets make it be the default.
