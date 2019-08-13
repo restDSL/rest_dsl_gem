@@ -41,17 +41,21 @@ module RestDSL
       # Can by wrapped manually to create more complicated logic than what's supported by the default generators
       def execute_request(method, rest_method_call, *args, headers: nil, payload: nil, params: nil, url_args: nil, **hash_args, &block)
         headers ||= self.headers
-        params ||= {}
         url_args ||= {}
-        params = "?#{params.map{|key,value| "#{key}=#{value}"}.join('&')}"
         service_name = "#{@service_name}/" unless @service_name&.empty?
         hash_args.merge!(auth)
         hash_args.merge!(payload: payload) if payload
         sub_url_args!(url_args, rest_method_call)
-        arg_list = [method, "#{service_name}#{rest_method_call}#{params}", headers]
+        arg_list = [method, "#{service_name}#{rest_method_call}#{build_params(params)}", headers]
         response = @client.execute(*arg_list, *args, **hash_args, &block)
         @last_response = response[:response]
         response[:parsed]
+      end
+
+      def build_params(params)
+        params ||= {}
+        return "" if params.empty?
+        "?#{params.map{|key,value| "#{key}=#{value}"}.join('&')}" unless params.empty?
       end
 
       def sub_url_args!(arg_list, rest_method_call)
