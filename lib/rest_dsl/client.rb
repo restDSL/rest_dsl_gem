@@ -33,7 +33,7 @@ module RestDSL
     def execute(method, endpoint, headers, payload: nil, **hash_args, &block)
       url = "#{@base_url}/#{endpoint}"
       args = { method: method.to_sym, url: url, headers: headers }
-      args.merge!(payload: payload) if payload && method_has_payload?(method)
+      args.merge!(payload: payload.to_json) if payload && method_has_payload?(method)
       args.merge!(hash_args)
 
       response =
