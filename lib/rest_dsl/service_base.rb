@@ -71,6 +71,7 @@ module RestDSL
       def reload_config
         @config = Psych.load_file(@config_file)[@environment] if File.exist?(@config_file)
         @config = {} unless File.exist?(@config_file)
+        @config
       end
 
       def auth
