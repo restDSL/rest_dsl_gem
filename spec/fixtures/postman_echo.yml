@@ -6,3 +6,4 @@
 
   :headers:
     :header1: "i'm a header i'm a header, i'm a header"
+    :content_type: 'application/json'

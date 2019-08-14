@@ -96,8 +96,9 @@ describe RestDSL::ServiceBase do
     end
 
     it 'can pass a payload to methods that use one' do
+      headers = {content_type: 'application/json'}
       payload = {foo: 'bar', baz: 'qux'}
-      result = PostManEcho.post_echo(payload: payload)
+      result = PostManEcho.post_echo(headers: headers, payload: payload)
       expect(result[:json]).to match payload
     end
   end

@@ -30,9 +30,9 @@ describe RestDSL::Client do
 
     it 'can make post requests against a webservice' do
       service = RestDSL::Client.new(base_url: 'https://postman-echo.com')
-      headers = {accept: 'application/json'}
-      auth = {user: 'foo', password: 'bar'}
-      payload = {body: "I've got a lovely bunch of coconuts, here they are all dancing in the rain"}
+      headers = { accept: 'application/json', content_type: 'application/json' }
+      auth = { user: 'foo', password: 'bar' }
+      payload = { body: "I've got a lovely bunch of coconuts, here they are all dancing in the rain" }
       result = service.execute(:post, 'post?bar=baz', headers, payload: payload, **auth)
       aggregate_failures('The response should contain both the body and params') do
         expect(result[:parsed][:args][:bar]).to eq 'baz'
