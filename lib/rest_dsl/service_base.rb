@@ -18,17 +18,13 @@ module RestDSL
 
     class << self
       attr_reader :environment, :file_name, :client, :config_file, :last_response
-      attr_writer :headers, :authentication
+      attr_writer :headers, :authentication, :service_name
 
       # Initializes the singleton
       def environment=(environment)
         @environment = environment
         @client = Client.new(environment)
         self
-      end
-
-      def service_name=(name)
-        @service_name = name
       end
 
       def rest_call(method, name, url_schema)
