@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'rest_dsl'
   spec.version       = RestDSL::VERSION
   spec.authors       = ['Luke Ridge']
-  spec.email         = ['ridgel@grangeinsurance.com']
+  spec.email         = ['lzridge.04@gmail.com']
 
   spec.summary       = %q{A Simple DSL for writing rest services}
   spec.homepage      = "https://github.com/castone22/rest_dsl_gem"
