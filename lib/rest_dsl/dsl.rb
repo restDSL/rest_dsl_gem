@@ -25,13 +25,13 @@ module RestDSL
       end
 
       def from_file(file_name)
-        parser = file_parsers.find{|key, _| key.any? {|file_type| file_name.include? file_type}}[1]
+        parser = file_parsers.find{|key, _| key.any? {|file_type| file_name.include? file_type}}&.[](1)
         result = if parser.eql?(Psych)
                    parser.load_file(file_name)
-                 else # Most non-yaml parsers in ruby work like the json one so lets make it be the default.
+                 elsif parser.eql?(JSON)
                    parser.parse(File.read(file_name))
                  end
-        result ||= File.read(file_name)
+        result ||= File.new(file_name)
         result
       rescue Errno::ENOENT => e
         e.message << " relative to directory #{Dir.pwd}"

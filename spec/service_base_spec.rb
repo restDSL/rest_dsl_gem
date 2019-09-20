@@ -101,6 +101,13 @@ describe RestDSL::ServiceBase do
       result = PostManEcho.post_echo(headers: headers, payload: payload)
       expect(result[:json]).to match payload
     end
+
+    it 'can also pass form data to methods that use it' do
+      headers = {content_type: 'multipart/form-data'}
+      payload = { 'foo': 'bar', 'baz': 'qux', multipart: true }
+      result = PostManEcho.post_echo(headers: headers, form_data: payload)
+      expect(result[:form]).to match payload
+    end
   end
 
 end
