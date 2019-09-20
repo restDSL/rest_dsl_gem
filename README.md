@@ -20,6 +20,14 @@ Or install it yourself as:
 
 ## Usage
 
+Create a config in your project root
+```yaml
+# ./config/rest_dsl.yml
+:environments:
+  :postman_prod:
+    :url: 'https://postman-echo.com'
+```
+
 Create a service class
 ```ruby
 # some_dir/postman_echo.rb
