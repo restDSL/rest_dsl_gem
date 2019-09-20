@@ -32,7 +32,7 @@ describe RestDSL::Client do
       service = RestDSL::Client.new(base_url: 'https://postman-echo.com')
       headers = { accept: 'application/json', content_type: 'application/json' }
       auth = { user: 'foo', password: 'bar' }
-      payload = { body: "I've got a lovely bunch of coconuts, here they are all dancing in the rain" }
+      payload = { body: "I've got a lovely bunch of coconuts, here they are all dancing in the rain" }.to_json
       result = service.execute(:post, 'post?bar=baz', headers, payload: payload, **auth)
       aggregate_failures('The response should contain both the body and params') do
         expect(result[:parsed][:args][:bar]).to eq 'baz'
