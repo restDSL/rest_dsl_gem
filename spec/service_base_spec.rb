@@ -7,6 +7,7 @@ class PostManEcho < RestDSL::ServiceBase
   rest_call(:get, :echo, 'get')
   rest_call(:post, :echo, 'post')
   rest_call(:get, :auth, 'basic-auth')
+  rest_call(:get, :path_params, 'get/:person/:id')
 end
 
 describe RestDSL::ServiceBase do
@@ -85,14 +86,20 @@ describe RestDSL::ServiceBase do
       expect(result[:args][:foo]).to eql 'bar'
     end
 
-    # This returns a 404 as postman echo doesn't support this functionality, so i have to test this in complete isolation
-    # rather than intended us
-    # TODO test this a bit better using some sort of mock, i haven't decided the best approach.
     it 'allows complex url args to be defined by using symbol substitution' do
       args = {id: '1', person: 'robert'}
-      url = 'get/:person/:id'
-      RestDSL::ServiceBase.sub_url_args!(args, url)
-      expect(url).to eql('get/robert/1')
+      # TODO Gross v
+      stub_const('RestClient::Request',
+                 req_class =
+                   class_double('RestClient::Request',
+                                new: (request = instance_double('RestClient::Request', execute: instance_double('RestClient::Response', to_json: '', code: 200, body: ''))
+                                )
+                   )
+      )
+      # TODO Gross ^
+      expect(req_class).to receive(:new).with({:method=>:get, :url=>"https://postman-echo.com/get/robert/1", :headers=>{}})
+      expect(request).to receive(:execute)
+      PostManEcho.get_path_params(url_args: args)
     end
 
     it 'can pass a payload to methods that use one' do

@@ -42,7 +42,7 @@ module RestDSL
         rescue RestClient::ExceptionWithResponse => e
           e.response
         end
-      { response: response, parsed: JSON.parse(response, symbolize_names: true) }
+      { response: response, parsed: JSON.parse(response.to_s, symbolize_names: true) }
     rescue JSON::ParserError => e
       { response: response, parsed: "Failed to parse, see response for more information, code was: #{response.code}, message was: #{response.body}" }
     end
