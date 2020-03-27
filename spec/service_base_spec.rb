@@ -22,7 +22,7 @@ describe RestDSL::ServiceBase do
   end
 
   context :inheritance do
-    it 'stores the file name of the class theß it was inherited from' do
+    it 'stores the file name of the class the it was inherited from' do
       expect(PostManEcho.file_name).to eql __FILE__
     end
 
@@ -114,6 +114,13 @@ describe RestDSL::ServiceBase do
       payload = { 'foo': 'bar', 'baz': 'qux', multipart: true }
       result = PostManEcho.post_echo(headers: headers, form_data: payload)
       expect(result[:form]).to match payload
+    end
+
+    it 'can take a generic text body' do
+      headers = {content_type: 'application/xml'}
+      payload = "<customer>\n\t<first_name>Robert</first_name>\n\t<last_name>Riley</last_name>\n</customer>"
+      result = PostManEcho.post_echo(headers: headers, text: payload)
+      expect(result[:data]).to match payload
     end
   end
 
