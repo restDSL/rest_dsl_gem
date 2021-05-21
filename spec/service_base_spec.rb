@@ -8,6 +8,7 @@ class PostManEcho < RestDSL::ServiceBase
   rest_call(:post, :echo, 'post')
   rest_call(:get, :auth, 'basic-auth')
   rest_call(:get, :path_params, 'get/:person/:id')
+  rest_call(:delete, :echo, 'delete')
 end
 
 describe RestDSL::ServiceBase do
@@ -114,6 +115,14 @@ describe RestDSL::ServiceBase do
       payload = { 'foo': 'bar', 'baz': 'qux', multipart: true }
       result = PostManEcho.post_echo(headers: headers, form_data: payload)
       expect(result[:form]).to match payload
+    end
+
+    it 'can pass a delete request with a body provided Net::HTTP has been configured to allow it' do
+      headers = {content_type: 'application/json'}
+      payload = {foo: 'bar'}
+      stub_const("Net::HTTP::Delete::REQUEST_HAS_BODY", true)
+      result = PostManEcho.delete_echo(headers: headers, payload: payload)
+      expect(result[:json]).to match payload
     end
   end
 
