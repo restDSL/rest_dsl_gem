@@ -7,7 +7,7 @@ module RestDSL
   class Client
 
     class << self
-      attr_accessor :methods_without_payloads, :config_dir
+      attr_accessor :config_dir
 
       def environments
         RestDSL.configuration[:environments]
@@ -16,8 +16,6 @@ module RestDSL
     end
 
     attr_accessor :base_url
-
-    @methods_without_payloads = %i[get delete head options]
 
     def initialize(environment = nil, base_url: nil)
       if base_url
@@ -49,7 +47,7 @@ module RestDSL
     end
 
     def method_has_payload?(method)
-      !self.class.methods_without_payloads.include?(method)
+      Net::HTTP.const_get(:"#{method.to_s.capitalize}")::REQUEST_HAS_BODY
     end
 
     def environments
